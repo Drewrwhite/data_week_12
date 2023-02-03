@@ -95,6 +95,7 @@ def final_vote():
     # read file
     read_file_task = read_file()
 
+    # add votes
     add_votes_task = add_votes(read_file_task)
 
     # complete tasks

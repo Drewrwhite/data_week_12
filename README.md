@@ -32,7 +32,7 @@ With the list above in mind, write a DAG that:
     5. ```
          Connection Id = data_fs
          Connection Type = File (path)
-         Extra = {"path": "/data"}
+         Extra = {"path": "/opt/airflow/data"}
     6. Click Save
 
 * Has a task that reads each row in `votes.csv`, and checks whether that value is in the `flavors_choices` list defined above. If it is, append it to a new list called `valid_votes`. This task should return the `valid_votes` list.

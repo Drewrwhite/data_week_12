@@ -99,3 +99,6 @@ def final_vote():
 
     # complete tasks
     wait_for_file >> read_file_task >> add_votes_task
+
+# generate dag
+dag = final_vote()

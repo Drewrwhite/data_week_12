@@ -1,8 +1,8 @@
-# Code Review: Airflow pt 1
+# Code Review: Airflow pt 2
 
 #### By Drew White
 
-#### Code Review - Demonstrating the use of Apache Airflow. 
+#### Code Review - Demonstrating the use of Apache Airflow, continued
 
 ## Technologies Used
 
@@ -14,25 +14,51 @@
 </br>
 
 ## Description:
-<img src="./images/apple_dag.png" width=60% height=60%>
 
-- In the `code_review.py` - DAG
-- DAG contains the following tasks:
-  -  Task 1. An `echo_to_file` task that uses a Bash operator. This task will echo name, and redirect the output into a file called `code_review.txt` that's in the same directory as the `code_review.py` file
-  -  Task 2. A `greeting` task that uses a Python operator to call a Python function called `print_hello()`, it opens `code_review.txt`, reads your name from that file, and prints a greeting that includes your name.
-  -  Task 3. A task using a Bash operator, which echos `"picking three random apples"`.
-  -  Tasks 4, 5, and 6 are three Python operator tasks that will run simultaneously. Each task:
-        - [x] Has a unique task ID
-        - [x] Use a python_callable, `random_apple`. This function should randomly select an apple from the `APPLES` list, put it into a string, and print that string
-  -  Task 7.  DAG ends with an empty operator.
+Your cohort, plus several dozen of your closest friends, want to celebrate learning Airflow. You've all been asked to vote on a cake flavor from the following list:
 
+```
+flavors_choices = ["lemon", "vanilla", "chocolate", "pistachio", "strawberry", "confetti", "caramel", "pumpkin", "rose"]
+```
+
+With the list above in mind, write a DAG that:
+
+* Uses a file sensor to check whether the `votes.csv` file has been uploaded to the `data/` folder of this repository.
+* Uses a file connection `data_fs`. To set this up:
+    1. In the Airflow GUI:
+    2. Navigate to the Airflow Admin > Connections page
+    3. Click the + to add a new Connection
+    4. Enter the following information and leave the other fields blank:
+    5. ```
+         Connection Id = data_fs
+         Connection Type = File (path)
+         Extra = {"path": "/data"}
+    6. Click Save
+
+* Has a task that reads each row in `votes.csv`, and checks whether that value is in the `flavors_choices` list defined above. If it is, append it to a new list called `valid_votes`. This task should return the `valid_votes` list.
+
+* In another task, use `add_votes` Python function that takes a list as an argument, and prints the item that appears the most times in that list.
+
+* Pass the `return_value` XCom from the first task as an argument to the second task.
+
+* Uses decorators to define the tasks.
+
+_Task structure:_  
+<img src="./images/dag.png"> 
+
+_XCom:_ 
+<img src="./images/xcom.png"> 
+
+_Result:_ 
+<img src="./images/lemon.png"> 
+_The winner is lemon!_ 
 <br>
 
 ## Setup/Installation Requirements
 
 * Clone by inputting following into terminal: 
   ```bash
-  git clone https://github.com/Drewrwhite/data_week_11.git
+  git clone https://github.com/Drewrwhite/data_week_12.git
   ```
 * Navigate to directory:
   ```bash
@@ -72,7 +98,11 @@
   ```
 * Make directories for logs and plugins:
   ```bash
-  mkdir ./logs ./plugins
+  mkdir ./logs ./plugins ./dags ./data
+  ```
+* Download `votes.csv` locally:
+  ```bash
+  gsutil -m cp gs://data.datastack.academy/airflow_cr_2/votes.csv ./data/
   ```
 * Initialize airlflow:
   ```bash

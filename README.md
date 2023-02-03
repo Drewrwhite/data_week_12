@@ -96,7 +96,7 @@ _The winner is lemon!_
   ```bash
   echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
   ```
-* Make directories for logs and plugins:
+* Make directories for logs, plugins, dags and data:
   ```bash
   mkdir ./logs ./plugins ./dags ./data
   ```

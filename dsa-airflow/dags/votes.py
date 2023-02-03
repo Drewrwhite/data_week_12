@@ -54,7 +54,7 @@ def read_file():
 @task
 def add_votes(votes_list: list):
     """
-    using counter to check with flavor had max votes
+    using counter to check which flavor had max votes
     """
 
     data = Counter(votes_list)
@@ -77,7 +77,7 @@ def cake_final_vote():
     # wait for the airports file in the "data_fs" filesystem connection
     wait_for_file = FileSensor(
         task_id='wait_for_file',
-        poke_interval=55,
+        poke_interval=15,
         timeout=(30 * 60),
         mode="poke",  # mode: poke, reschedule
         filepath=FILE_NAME,  # file path to check (relative to fs_conn)

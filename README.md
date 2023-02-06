@@ -92,6 +92,10 @@ _The winner is lemon!_
   ```bash
   curl -LfO 'https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml'
   ```
+* Once `docker-compose.yml` is created we must mount the `data` folder under `volumes`:
+  ```bash
+   - ${AIRFLOW_PROJ_DIR:-.}/data:/opt/airflow/data
+  ```
 * Write airflow uid and airflow gid into a .env file:
   ```bash
   echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
